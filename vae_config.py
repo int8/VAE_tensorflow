@@ -2,10 +2,10 @@ import tensorflow as tf
 import prettytensor as pt
 
 flags = tf.flags
-flags.DEFINE_integer("batch_size", 50,  "batch size")
-flags.DEFINE_integer("epochs", 100, "numbers of epoch")
+flags.DEFINE_integer("batch_size", 10,  "batch size")
+flags.DEFINE_integer("epochs", 1000, "numbers of epoch")
 flags.DEFINE_float("learning_rate", 1e-2, "learning rate")
-flags.DEFINE_integer("representation_size", 500, "size of the VAE representaton")
+flags.DEFINE_integer("representation_size", 5, "size of the VAE representaton")
 flags.DEFINE_float("epsilon", 1e-8, "tiny value to avoid nans across network")
 flags.DEFINE_integer("input_channels", 3, "number of input channels")
 flags.DEFINE_integer("input_width", 112, "input width")

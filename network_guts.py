@@ -3,28 +3,28 @@ import prettytensor as pt
 import tensorflow as tf
 
 def encoder_tiny_sigmoid(representation_size, input):
-    return (pt.wrap(input).
-                conv2d(5, 5, stride=2).
-                conv2d(5, 5, stride=2).
-                conv2d(5, 5).
-                conv2d(5, 5).
-                flatten().
-                fully_connected(representation_size * 2, activation_fn=tf.nn.sigmoid)).tensor
+    layer =  (pt.wrap(input).
+                conv2d(5, 5, stride=2, name="enc_conv1").
+                conv2d(5, 5, stride=2, name="enc_conv2").
+                conv2d(5, 5, name="enc_conv3").
+                conv2d(5, 5, name="enc_conv4").
+                flatten())
 
-def decoder_tiny_sigmoid(batch_size, representation_size, input = None):
+    mu = layer.fully_connected(representation_size, activation_fn=None, name = "enc_fc1")
+    sig_log_sq = layer.fully_connected(representation_size, activation_fn=None, name = "enc_fc2")
+    return mu, sig_log_sq
+
+def generate_decoder_input(batch_size, representation_size, representation):
     epsilon = tf.random_normal([batch_size, representation_size])
-    if input is None:
-        mean = None
-        stddev = None
-        input = epsilon
-    else:
-        mean = input[:, :representation_size]
-        stddev = tf.sqrt(tf.exp(input[:, representation_size:]))
-        input = mean + epsilon * stddev
+    input = representation[0]  + epsilon * tf.sqrt(tf.exp(representation[1]))
+    return input, representation[0], representation[1]
+
+def decoder_tiny_sigmoid(batch_size, representation_size, representation):
+    input, mu, sig_log_sq = generate_decoder_input(batch_size, representation_size, representation)
     return (pt.wrap(input).
             reshape([batch_size, 1, 1, representation_size]).
-            deconv2d(8, 5, edges='VALID').
-            deconv2d(8, 5, stride=2, edges='VALID').
-            deconv2d(8, 5, stride=2, edges='VALID').
-            deconv2d(8, 5, stride=2, edges="VALID").
-            deconv2d(7, 3, edges="VALID",  activation_fn=tf.nn.sigmoid).tensor, mean, stddev)
+            deconv2d(8, 5, edges='VALID', name="dec_deconv1").
+            deconv2d(8, 5, stride=2, edges='VALID', name="dec_deconv2").
+            deconv2d(8, 5, stride=2, edges='VALID', name="dec_deconv3").
+            deconv2d(8, 5, stride=2, edges="VALID", name="dec_deconv4").
+            deconv2d(7, 3, edges="VALID",  activation_fn=tf.nn.sigmoid, name="dec_deconv5").tensor, mu, sig_log_sq)
