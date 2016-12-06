@@ -15,16 +15,17 @@ def encoder_tiny_sigmoid(representation_size, input):
     return mu, sig_log_sq
 
 def generate_decoder_input(batch_size, representation_size, representation):
-    epsilon = tf.random_normal([batch_size, representation_size])
-    input = representation[0]  + epsilon * tf.sqrt(tf.exp(representation[1]))
-    return input, representation[0], representation[1]
+    
+    return input, representation[0], stddev
 
 def decoder_tiny_sigmoid(batch_size, representation_size, representation):
     input, mu, sig_log_sq = generate_decoder_input(batch_size, representation_size, representation)
-    return (pt.wrap(input).
+    return ((pt.wrap(input).
             reshape([batch_size, 1, 1, representation_size]).
             deconv2d(8, 5, edges='VALID', name="dec_deconv1").
             deconv2d(8, 5, stride=2, edges='VALID', name="dec_deconv2").
             deconv2d(8, 5, stride=2, edges='VALID', name="dec_deconv3").
             deconv2d(8, 5, stride=2, edges="VALID", name="dec_deconv4").
-            deconv2d(7, 3, edges="VALID",  activation_fn=tf.nn.sigmoid, name="dec_deconv5").tensor, mu, sig_log_sq)
+            deconv2d(7, 3, edges="VALID",  activation_fn=tf.nn.sigmoid, name="dec_deconv5")).tensor, mu, sig_log_sq, input)
+
+def decoder
