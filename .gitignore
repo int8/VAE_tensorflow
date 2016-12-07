@@ -1,1 +1,4 @@
 *.pyc
+generated
+outputmodels
+data
