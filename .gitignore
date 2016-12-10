@@ -2,3 +2,7 @@
 generated
 outputmodels
 data
+orig
+samples
+results
+images_to_hdf5.py
