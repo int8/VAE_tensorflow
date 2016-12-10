@@ -27,6 +27,23 @@ class VaeAutoencoderSampler(TensorflowContext):
             samples.append(sample)
         return samples
 
+class VaeAutoencoderReconstructor(TensorflowContext):
+
+    def __init__(self, encoder, decoder, model_path):
+        TensorflowContext.__init__(self)
+
+        self.encoder = encoder
+        self.decoder = decoder
+
+        with self.prettytensor_scope:
+            with tf.variable_scope("vae"):
+                self.reconstruction = self.decoder.genereate_network_output_without_noise(self.encoder.get_network_output())
+            self.load(model_path)
+
+    def reconstruct(self, input_data):
+        reconstructions = self.sess.run(self.reconstruction, { self.encoder.input_data: input_data })
+        return reconstructions
+
 class VaeAutoencoderTrainer(TensorflowContext):
 
     def __init__(self, encoder, decoder, hdf5reader):

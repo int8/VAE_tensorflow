@@ -65,14 +65,14 @@ def resize_hdf5(input_filename, output_filename, dataset_name, batch_size, new_w
 
 
 def images_to_hdf5(dir_path, output_hdf5, size = (112,112), channels = 3, resize_to = None):
-    files = os.listdir(dir_path)
+    files = sorted(os.listdir(dir_path))
     nr_of_images = len(files)
     if resize_to:
         size = resize_to
     i = 0
     pbar = ProgressBar(widgets=[Percentage(), Bar()], maxval=nr_of_images).start()
     data = np.empty(shape=(nr_of_images, size[0], size[1], channels), dtype=np.uint8)
-    for f in os.listdir(dir_path):
+    for f in files:
         datum = imread(dir_path + '/' + f)
         if resize_to:
             datum = np.asarray(Image.fromarray((datum), 'RGB').resize((size[0],size[1]), PIL.Image.ANTIALIAS))
@@ -82,3 +82,19 @@ def images_to_hdf5(dir_path, output_hdf5, size = (112,112), channels = 3, resize
     pbar.finish()
     with h5py.File(output_hdf5, 'w') as hf:
         hf.create_dataset('data', data=data)
+
+def read_data_from_dir(dir_path, resize_to):
+    files = os.listdir(dir_path)
+    nr_of_images = len(files)
+    data = {
+        'files': ['' for _ in xrange(nr_of_images)],
+        'tensors': np.empty(shape=(nr_of_images, resize_to[0], resize_to[1], resize_to[2]), dtype=np.uint8)
+    }
+    i = 0
+    for f in files:
+        datum = imread(dir_path + '/' + f)
+        datum = np.asarray(Image.fromarray((datum), 'RGB').resize((resize_to[0],resize_to[1]), PIL.Image.ANTIALIAS))
+        data['tensors'][i, :, :, :] = datum
+        data['files'][i] = f
+        i = i + 1
+    return data

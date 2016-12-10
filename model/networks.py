@@ -57,6 +57,11 @@ class DeconvolutionalDecoder:
         return self.network_guts(), self.mu, self.stddev
 
 
+    def genereate_network_output_without_noise(self, input_tensor, batch_size = None):
+        self.latent_var = input_tensor[0]
+        return self.network_guts()
+
+
     def generate_network_random_sample(self):
         self.epsilon = tf.placeholder(tf.float32, [1, self.representation_size])
         self.latent_var = self.epsilon
