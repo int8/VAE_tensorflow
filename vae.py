@@ -1,10 +1,10 @@
-from model.networks import ConvolutionalEncoder, DeconvolutionalDecoder
-from common.io_utils import HDF5Reader, read_data_from_dir
-from common.vae_args import args
-from model.vaemodel import VaeAutoencoderTrainer, VaeAutoencoderSampler, VaeAutoencoderReconstructor
-from scipy.misc import imsave
 import numpy as np
 import tensorflow as tf
+from scipy.misc import imsave
+from common.vae_args import args
+from common.io_utils import HDF5Reader, read_data_from_dir
+from model.network_implementations import ConvolutionalEncoder, DeconvolutionalDecoder
+from model.vaemodel import VaeAutoencoderTrainer, VaeAutoencoderSampler, VaeAutoencoderReconstructor
 
 if __name__ == "__main__":
 
@@ -39,8 +39,8 @@ if __name__ == "__main__":
         # build decoder graph
         decoder = DeconvolutionalDecoder(args.latent_dim, 1)
         with VaeAutoencoderSampler(decoder, args.input) as sampler:
-            a =  np.random.randn(1,30)
-            b =  np.random.randn(1,30)
+            a =  np.random.randn(1,args.latent_dim)
+            b =  np.random.randn(1,args.latent_dim)
 
             for k in xrange(30):
                 a = b.copy()
