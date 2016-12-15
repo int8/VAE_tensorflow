@@ -101,6 +101,7 @@ optional arguments:
 If you want to use existing model to reconstruct input images use reconstruct command
 
 ```bash
+$ python vae.py reconstruct -h
 usage: vae.py reconstruct [-h] [--latent-dim] [--input-width] [--input-height]
                           input inputdir output
 
