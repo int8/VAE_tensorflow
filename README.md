@@ -8,7 +8,7 @@ The main motivation of this post is to use Variational Autoencoder model to embe
 short demo video available [here](http://int8.io/wp-content/uploads/2016/12/output.mp4)
 
 
-## Libraries used in experiments:
+## Requirements:
 
 * python v2.7.6
 * numpy v1.11.1
