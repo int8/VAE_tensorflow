@@ -44,7 +44,7 @@ if __name__ == "__main__":
 
             for k in xrange(30):
                 a = b.copy()
-                b = np.random.randn(1,30)
+                b = np.random.randn(1,args.latent_dim)
                 samples = sampler.walk_between_points(a, b, 10)
                 for i in xrange(len(samples)):
-                    imsave('samples/' + str(k) + '_' + str(i) + '.png', samples[i][0,:,:,:])
+                    imsave(args.output_dir + str(k) + '_' + str(i) + '.png', samples[i][0,:,:,:])
