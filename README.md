@@ -65,7 +65,7 @@ optional arguments:
   --input-height        Height of input images
 ```
 
-the most important detail here is format of input data. Input is expected to be HDF5 file containing dataset that is 4 dimensional tensor of dimensions:
+the most important detail here is format of input data. Input is expected to be HDF5 file containing dataset that is 4 dimensional tensor of size:
 ```
 nr_of_objects x width x height x 3
 ```
