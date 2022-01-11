@@ -5,8 +5,6 @@ This is supplementary code for the blog post [here](http://int8.io/variational-a
 The main motivation of this work is to use Variational Autoencoder model to embed unseen faces into the latent space of pre-trained single actor-centric face expressions. The datasets used in described experiments are based on youtube videos passed through openface feature extraction utility
 
 
-short demo video available [here](http://int8.io/wp-content/uploads/2016/12/output.mp4)
-
 
 ## Requirements:
 
@@ -37,7 +35,7 @@ positional arguments:
 optional arguments:
   -h, --help            show this help message and exit
 ```
-
+Kamil tells me you are working on analyzing the data for AOF@Carlo Barth @Johannes Kvam. Let me know when you get to the point where you can publish the average intensity values and I'll hook you up with the routing keys you should be using 
 The tool implements 3 high level commands:
 
 * train
