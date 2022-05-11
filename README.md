@@ -35,7 +35,7 @@ positional arguments:
 optional arguments:
   -h, --help            show this help message and exit
 ```
-Kamil tells me you are working on analyzing the data for AOF@Carlo Barth @Johannes Kvam. Let me know when you get to the point where you can publish the average intensity values and I'll hook you up with the routing keys you should be using 
+
 The tool implements 3 high level commands:
 
 * train
