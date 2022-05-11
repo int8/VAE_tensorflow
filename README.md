@@ -1,6 +1,5 @@
 # VAE implementation in Tensorflow for face expression reconstruction
 
-This is supplementary code for the blog post [here](http://int8.io/variational-autoencoder-in-tensorflow/)
 
 The main motivation of this work is to use Variational Autoencoder model to embed unseen faces into the latent space of pre-trained single actor-centric face expressions. The datasets used in described experiments are based on youtube videos passed through openface feature extraction utility
 
